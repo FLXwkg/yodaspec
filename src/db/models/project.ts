@@ -1,11 +1,5 @@
+import { IProject } from '@/types/interfaces'
 import mongoose, { Schema } from 'mongoose'
-
-interface IProject {
-  title: string
-  description: string
-  createdAt: Date
-  updatedAt: Date
-}
 
 const ProjectSchema = new Schema<IProject>({
   title: {
@@ -20,6 +14,6 @@ const ProjectSchema = new Schema<IProject>({
   timestamps: true
 })
 
-const Project = mongoose.model<IProject>('Project', ProjectSchema)
+const Project = mongoose.models.Project !== undefined ? mongoose.models.Project : mongoose.model<IProject>('Project', ProjectSchema)
 
 export default Project

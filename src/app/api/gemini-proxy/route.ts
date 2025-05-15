@@ -1,5 +1,5 @@
 import { connect } from '@/lib/db'
-import { GoogleGenAI, Type } from '@google/genai'
+import { GoogleGenAI } from '@google/genai'
 import { NextResponse } from 'next/server'
 
 const ai = new GoogleGenAI({
@@ -43,8 +43,8 @@ export async function GET (request: Request): Promise<NextResponse> {
       // }
     }
   })
-
-  const result = JSON.parse(response.text)
+  const text = response.text ?? ''
+  const result = JSON.parse(text)
 
   return NextResponse.json(result)
 }

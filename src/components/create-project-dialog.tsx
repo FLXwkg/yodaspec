@@ -6,17 +6,33 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from './ui/textarea'
 import { useState } from 'react'
+import { IProject } from '@/types/interfaces'
+import { Loader2 } from 'lucide-react'
+import { toast } from 'react-toastify'
 
-function CreateProjectDialog (): React.ReactNode {
+function CreateProjectDialog ({
+  createProject
+}: Readonly<{
+  createProject: (project: IProject) => Promise<void>
+}>): React.ReactNode {
   const [projectData, setProjectData] = useState({
     title: '',
     description: ''
   })
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
-    console.log('projectData :>> ', projectData)
+    setIsLoading(true)
+    try {
+      await createProject(projectData)
+      toast.success('Projet créé avec succès')
+    } catch (error) {
+      toast.error(`Une erreur est survenue : ${String(error)}`)
+    }
+    setIsLoading(false)
   }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -29,7 +45,7 @@ function CreateProjectDialog (): React.ReactNode {
             Nommez votre projet et renseignez une description
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => { void handleSubmit(e) }}>
           <div className='grid gap-4 py-4'>
             <div className='grid grid-cols-4 items-center gap-4'>
               <Label htmlFor='name' className='text-right'>
@@ -56,7 +72,10 @@ function CreateProjectDialog (): React.ReactNode {
             </div>
           </div>
           <DialogFooter>
-            <Button type='submit' className='cursor-pointer'>Créer le projet</Button>
+            <Button type='submit' className='cursor-pointer' disabled={isLoading}>
+              {isLoading ? <Loader2 className='w-4 h-4 mr-2 animate-spin' /> : null}
+              Créer le projet
+            </Button>
           </DialogFooter>
         </form>
 

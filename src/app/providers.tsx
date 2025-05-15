@@ -1,4 +1,5 @@
 import { ThemeProvider } from '@/components/providers/theme-provider'
+import { ToastContainer } from 'react-toastify'
 
 function Providers ({ children }: { children: React.ReactNode }): React.ReactElement {
   return (
@@ -8,6 +9,7 @@ function Providers ({ children }: { children: React.ReactNode }): React.ReactEle
       enableSystem
     >
       {children}
+      <ToastContainer />
     </ThemeProvider>
   )
 }
