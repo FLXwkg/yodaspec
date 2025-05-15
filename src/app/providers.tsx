@@ -1,0 +1,15 @@
+import { ThemeProvider } from '@/components/providers/theme-provider'
+
+function Providers ({ children }: { children: React.ReactNode }): React.ReactElement {
+  return (
+    <ThemeProvider
+      attribute='class'
+      defaultTheme='system'
+      enableSystem
+    >
+      {children}
+    </ThemeProvider>
+  )
+}
+
+export default Providers
