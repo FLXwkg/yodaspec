@@ -20,6 +20,7 @@ function CreateProjectDialog ({
     description: ''
   })
   const [isLoading, setIsLoading] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
@@ -27,6 +28,7 @@ function CreateProjectDialog ({
     try {
       await createProject(projectData)
       toast.success('Projet créé avec succès')
+      setIsOpen(false)
     } catch (error) {
       toast.error(`Une erreur est survenue : ${String(error)}`)
     }
@@ -34,7 +36,7 @@ function CreateProjectDialog ({
   }
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant='outline'>Créer un projet</Button>
       </DialogTrigger>
