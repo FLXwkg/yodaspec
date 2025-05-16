@@ -30,16 +30,21 @@ const clientOptions: ConnectOptions = {
   }
 }
 
-export const connect = async (): Promise<void> => {
+const connect = async (): Promise<void> => {
   if (typeof MONGODB_URI !== 'string' || MONGODB_URI.length === 0) {
     throw new Error('MONGODB_URI is undefined')
   }
 
   try {
     await mongoose.connect(MONGODB_URI, clientOptions)
-    console.log('MONGODB CONNECTED')
   } catch (error) {
     console.error(error)
     throw new Error('Failed to connect to MongoDB')
   }
 }
+
+const disconnect = async (): Promise<void> => {
+  return await mongoose.disconnect()
+}
+
+export { connect, disconnect }
