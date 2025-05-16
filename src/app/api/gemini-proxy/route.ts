@@ -43,8 +43,8 @@ export async function GET (request: Request): Promise<NextResponse> {
       // }
     }
   })
-  const text = response.text ?? ''
-  const result = JSON.parse(text)
+
+  const result = JSON.parse(String(response.text))
 
   return NextResponse.json(result)
 }
