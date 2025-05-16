@@ -25,5 +25,9 @@
     "activityBar.background": "#422710",
     "titleBar.activeBackground": "#5C3716",
     "titleBar.activeForeground": "#FDFBF8"
-  }
+  },
+  "standard.autoFixOnSave": true,
+  "standard.enable": true,
+  "standard.enableGlobally": true,
+  "standard.engine": "ts-standard"
 }
